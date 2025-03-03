@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 
+from .models import Profile
+
 UserModel = get_user_model()
 
 @admin.register(UserModel)
@@ -23,3 +25,5 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active', 'is_superuser'),
         }),
     )
+
+admin.site.register(Profile)
