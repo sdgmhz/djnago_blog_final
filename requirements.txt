@@ -1,3 +1,4 @@
 Django>4.2,<4.3
 
 django-crispy-forms
+python-decouple
