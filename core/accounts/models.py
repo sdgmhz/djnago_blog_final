@@ -41,6 +41,9 @@ class CustomUserManager(BaseUserManager):
     
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    """
+    custom user model of our project that uses email and password
+    """
     email = models.EmailField(max_length=255, unique=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -50,7 +53,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     updated_date = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = 'email'
-    objects = CustomUserManager
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.email
