@@ -1,5 +1,9 @@
 Django>4.2,<4.3
 
 pillow
-django-crispy-forms
 python-decouple
+
+django-crispy-forms
+crispy-bootstrap4
+
+django-simple-captcha

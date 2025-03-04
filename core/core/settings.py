@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     # third party
     'crispy_forms',
+    'crispy_bootstrap4',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +139,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # authentication settings
 AUTH_USER_MODEL = 'accounts.CustomUser'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+# email backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # crispy forms config
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
