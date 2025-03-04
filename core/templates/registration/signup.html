@@ -14,18 +14,9 @@ Sign Up
                 <form action="" method="POST">
                     {% csrf_token %}
                     {{form|crispy}}
-                    {% comment %} <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter your password">
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirm-password" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirm-password" placeholder="Confirm your password">
-                    </div> {% endcomment %}
+                    {{ form.captcha }}
+                    <button type="button" id="refresh-captcha" class="btn btn-outline-secondary btn-sm mt-2">
+                        🔄 Refresh Captcha
                     <button type="submit" class="btn btn-primary w-100 mt-3">Signup</button>
                 </form>
                 <div class="mt-3 text-center">
