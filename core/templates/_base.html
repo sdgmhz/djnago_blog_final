@@ -46,23 +46,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="blog-list.html">Blog</a>
                 </li>
-                {% comment %} <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Your Zone
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% if not user.is_authenticated %}
-                        <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Login</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Signup</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:password_reset' %}">Forget Password</a></li>
-                        {% else %}
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
-                        {% endif %}
-                    </ul>
-                </li> {% endcomment %}
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Your Zone
@@ -87,6 +70,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:password_change' %}">Change Password</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:update_profile' %}">Update Your Profile</a>
                         </li>
                         {% endif %}
                     </ul>

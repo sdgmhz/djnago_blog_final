@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center mt-3">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center">You can view and edit your profile here </h2>
+                <h5 class="text-center">Edit profile for account {{user.email}}</h5>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Update My Profile</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
