@@ -18,6 +18,7 @@ urlpatterns = [
         PasswordResetConfirmView.as_view(form_class=CustomSetPasswordForm,success_url=reverse_lazy("accounts:password_reset_complete")),
         name="password_reset_confirm",
     ),
+    path('profile/update/', views.UpdateProfileView.as_view(), name="update_profile"),
     path('', include('django.contrib.auth.urls')),
 
 ]

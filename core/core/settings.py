@@ -41,11 +41,13 @@ INSTALLED_APPS = [
 
     # local apps
     'accounts.apps.AccountsConfig',
+    'website.apps.WebsiteConfig',
 
     # third party
     'crispy_forms',
     'crispy_bootstrap4',
     'captcha',
+    
 ]
 
 MIDDLEWARE = [
@@ -139,8 +141,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # authentication settings
 AUTH_USER_MODEL = 'accounts.CustomUser'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'website:home'
+LOGOUT_REDIRECT_URL = 'website:home'
 
 # email backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
