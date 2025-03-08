@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # local apps
     'accounts.apps.AccountsConfig',
     'website.apps.WebsiteConfig',
+    'blog.apps.BlogConfig',
 
     # third party
     'crispy_forms',
