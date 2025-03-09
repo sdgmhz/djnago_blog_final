@@ -80,5 +80,15 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         profile = get_object_or_404(Profile, user=self.request.user)
         return self.get_object().author == profile
+    
+
+class ManagePostListView(LoginRequiredMixin, ListView):
+    context_object_name = 'posts'
+    paginate_by = 4
+    template_name = 'blog/post_management.html'
+
+    def get_queryset(self):
+        profile = get_object_or_404(Profile, user=self.request.user)
+        return Post.objects.filter(author=profile).order_by('id')
 
 

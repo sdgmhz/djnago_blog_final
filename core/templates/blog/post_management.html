@@ -2,11 +2,12 @@
 {% load humanize %}
 
 {% block title %}
-Blog
+Post Management
 {% endblock title %}
 
 {% block content %}
-<h1 class="mb-4">Blog Posts</h1>
+<h1 class="mb-4">Blog Posts for {{user}}</h1>
+<h3>dear {{user}} you can edit and delete your posts here:</h3>
 
 
 <div class="row">
