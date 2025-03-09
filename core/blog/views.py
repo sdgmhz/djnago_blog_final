@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-from .models import Post
+from .models import Post, Category
 from accounts.models import Profile
+from .forms import CategoryForm
 
 
 class PostListView(ListView):
@@ -90,5 +91,18 @@ class ManagePostListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         profile = get_object_or_404(Profile, user=self.request.user)
         return Post.objects.filter(author=profile).order_by('id')
+    
+
+class CategoryListCreateView(LoginRequiredMixin, ListView, FormView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'blog/category_list.html'
+    context_object_name = 'categories'
+    success_url = reverse_lazy("blog:category_list")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
 
 

@@ -16,4 +16,5 @@ urlpatterns = [
     path('<int:pk>/delete/', views.PostDeleteView.as_view(), name="post_delete"),
 
     path('manage_my_post/',views.ManagePostListView.as_view(), name='post_management'),
+    path('categories/',views.CategoryListCreateView.as_view(), name='category_list'), 
 ]
