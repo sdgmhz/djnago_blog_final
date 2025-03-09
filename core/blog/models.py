@@ -13,7 +13,8 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     status = models.CharField(max_length=3, choices=STATUS_CHOICES)
-    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
+    counted_views = models.IntegerField(default=0)
+    category = models.ManyToManyField('Category')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     published_date = models.DateTimeField()
@@ -23,6 +24,10 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         return reverse("blog:post_detail", kwargs={"pk": self.pk})
+    
+    def increment_counted_views(self):
+        self.counted_views += 1
+        self.save()
     
 
 class Category(models.Model):
