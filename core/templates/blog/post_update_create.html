@@ -1,0 +1,30 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Create Or Update A Post
+{% endblock title %}
+
+{% block content %}
+<h1> Dear {{request.user}} </h1>
+<h3> You can create/update a post here.<h3>
+<h3> Your post will be published after admin confirmation.<h3>
+
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center">Create Your Post</h3>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                    
+                        <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
