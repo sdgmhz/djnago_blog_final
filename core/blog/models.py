@@ -12,7 +12,7 @@ class Post(models.Model):
     author = models.ForeignKey('accounts.Profile', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     content = models.TextField()
-    status = models.CharField(max_length=3, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=3, choices=STATUS_CHOICES, default='drf')
     counted_views = models.IntegerField(default=0)
     category = models.ManyToManyField('Category')
     created_date = models.DateTimeField(auto_now_add=True)

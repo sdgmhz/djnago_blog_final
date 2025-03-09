@@ -43,9 +43,31 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'website:contact' %}">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'blog:post_list' %}">Blog</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Blog
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if not user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:post_list' %}">Blog Home</a>
+                        </li>
+                        
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:post_list' %}">Blog Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:post_create' %}">Create a post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Manage your posts</a>
+                        </li>
+                        {% endif %}
+                    </ul>
                 </li>
+
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Your Zone

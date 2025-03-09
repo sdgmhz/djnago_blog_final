@@ -1,4 +1,5 @@
 {% extends '_base.html' %}
+{% load humanize %}
 
 {% block title %}
 {{ post.title }}
@@ -11,20 +12,20 @@
     <div class="card mb-4">
         <div class="card-body">
             {% if post.image %}
+            <div class="d-flex justify-content-center align-items-center">
             <img src="{{post.image.url}}" class="img-fluid mb-4 " alt="Post Image">
+            </div>
             {% endif %}<br>
-            {% comment %} <p class="text-muted">Category: Technology</p> {% endcomment %}
-            
             <snap class="card-text">Category:
                 {% for category in post.category.all %}
-                 <a  class="text-decoration-none link-info" href="{% url 'blog:post_category' category.name %}">{{category}}</a>{% if not forloop.last %}, {% endif %}</snap>
-            {% endfor %}
-            {% comment %} <p class="text-muted">Author: John Doe</p> {% endcomment %}
+                 <a  class="text-decoration-none link-info" href="{% url 'blog:post_category' category.name %}">{{category}}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}</snap>
             <p class="card-text">Author: <a class="text-decoration-none link-secondary" href="{% url 'blog:post_author' post.author %}">{{ post.author }}</a></p>
+            <p class="card-text">views: {{ post.counted_views|intcomma }}</p>
             <p>{{post.content|safe}}</p>
             {% if request.user == post.author.user %}
-            <a href="#" class="btn btn-warning">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
+            <a href="{% url 'blog:post_update' post.id %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'blog:post_delete' post.id %}" class="btn btn-danger">Delete</a>
             {% endif %}
         </div>
     </div>
