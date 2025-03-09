@@ -1,5 +1,6 @@
 from django.db import models
 from blog.models import Post
+from django.urls import reverse
 
 
 class Comment(models.Model):
@@ -20,3 +21,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.email}-{self.post.title}'
+    
+    def get_absolute_url(self):
+        return reverse("comment:comment_detail", kwargs={"pk": self.pk})
+    

@@ -32,10 +32,10 @@ Post Management
             </div>
             <div style="display: flex; gap: 10px;" class="mb-3 mx-auto"> 
                 <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Read More</a>
-                {% if request.user == post.author.user %}
+                
                 <a class="btn btn-warning" href="{% url 'blog:post_update' post.id %}">Edit</a>
                 <a class="btn btn-danger" href="{% url 'blog:post_delete' post.id %}">Delete</a>
-                {% endif %}
+                
                 
 
             </div>

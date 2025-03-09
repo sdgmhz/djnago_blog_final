@@ -76,12 +76,18 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         messages.error(self.request, "Something is wrong")
         return self.render_to_response(self.get_context_data(form=form))
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
+    
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ('image', 'title', 'content', 'published_date', 'category')
     template_name = 'blog/post_update_create.html'
     success_url = reverse_lazy("blog:post_list")
+
 
     def form_valid(self, form):
         profile = get_object_or_404(Profile, user=self.request.user)
@@ -97,6 +103,11 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         profile = get_object_or_404(Profile, user=self.request.user)
         return self.get_object().author == profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post

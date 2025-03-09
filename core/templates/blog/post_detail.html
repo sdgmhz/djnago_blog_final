@@ -69,6 +69,17 @@
                         <h6>{{comment.subject}}</h6>
                         <p>{{comment.message}}</p>
                         <p><span class="bi bi-clock"></span> {{comment.created_date|naturaltime}}</p>
+                        <p class="card-text">Recommendation: 
+                            <span>
+                                {% if comment.recommend == 'yes'%}
+        
+                                <span style="color: blue;">I recommend this post</span></p>
+                                {% else %}
+                                <span style="color: red;">I don't recommend this post</span></p>
+                                {% endif %}
+                            </span>
+                        </p>
+        
                     </div>
                 {% empty %}
                         <div class="border p-3 mb-3">
