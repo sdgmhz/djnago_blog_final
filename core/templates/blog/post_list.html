@@ -18,14 +18,14 @@ Blog
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title"><a href="{{ post.get_absolute_url }}" class="text-decoration-none link-dark">{{ post.title }}</a></h5>
-                <snap class="card-text">Category:
+                <span class="card-text">Category:
                     {% for category in post.category.all %}
                      <a  class="text-decoration-none link-info" href="{% url 'blog:post_category' category.name %}">{{category}}</a>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
-                </snap>
+                </span>
                 <p class="card-text">Author: <a class="text-decoration-none link-secondary" href="{% url 'blog:post_author' post.author %}">{{ post.author }}</a></p>
                 <p class="card-text">views: {{ post.counted_views|intcomma }}</p>
-                <snap class="card-text">published at: {{ post.created_date|naturaltime }}</snap>
+                <span class="card-text">published at: {{ post.created_date|naturaltime }}</span>
 
                 <p class="card-text">{{post.content|safe|truncatewords:20}}</p>
             </div>

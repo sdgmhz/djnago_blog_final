@@ -16,12 +16,13 @@
             <img src="{{post.image.url}}" class="img-fluid mb-4 " alt="Post Image">
             </div>
             {% endif %}<br>
-            <snap class="card-text">Category:
+            <span class="card-text">Category:
                 {% for category in post.category.all %}
                  <a  class="text-decoration-none link-info" href="{% url 'blog:post_category' category.name %}">{{category}}</a>{% if not forloop.last %}, {% endif %}
-                {% endfor %}</snap>
+                {% endfor %}</span>
             <p class="card-text">Author: <a class="text-decoration-none link-secondary" href="{% url 'blog:post_author' post.author %}">{{ post.author }}</a></p>
             <p class="card-text">views: {{ post.counted_views|intcomma }}</p>
+            <span class="card-text">published at: {{ post.created_date|naturaltime }}</span>
             <p>{{post.content|safe}}</p>
             {% if request.user == post.author.user %}
             <a href="{% url 'blog:post_update' post.id %}" class="btn btn-warning">Edit</a>
@@ -34,26 +35,48 @@
             <h4>Comments</h4>
             <div class="mb-3">
                 <form method="POST" action="">
-                        <input type="text" class="form-control mb-2" placeholder="Your Name">
-                        <input type="email" class="form-control mb-2" placeholder="Your Email">
-                        <input type="text" class="form-control mb-2" placeholder="Subject">
-                    <textarea class="form-control" rows="3" placeholder="Add a comment..."></textarea>
+                    {% csrf_token %}
+                    <input type="text" name="name" class="form-control mb-2" placeholder="Your Name">
+                    {% if user.is_authenticated %}
+                    <input type="hidden" name="email" value={{user.email}}>
+
+                    {% else %}
+                        <input type="email" name="email" class="form-control mb-2" placeholder="Your Email">
+                    {% endif %}
+                    <input type="text" name="subject" class="form-control mb-2" placeholder="Subject">
+                    <textarea class="form-control" name="message" rows="3" placeholder="Add a comment..."></textarea>
                     <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox" id="recommend">
-                        <label class="form-check-label" for="recommend">I recommend this post</label>
+                        <label for="recommend">Recommendation: </label>
+                            <select id="recommend" name="recommend">
+                                <option value="yes">I recommend this post</option>
+                                <option value="no">I don't recommend this postab</option>
+                            </select>
+                    </div>
+                    <div class="container mt-3">
+                        {{form.captcha}}
+                    </div>
+                    <div class="container">
+                    <button type="button" id="refresh-captcha" class="btn btn-outline-secondary btn-sm mt-2">
+                        🔄 Refresh Captcha
                     </div>
                     <button class="btn btn-primary mt-2">Submit</button>
             </form>
             </div>
             <div class="mt-4">
-                <div class="border p-3 mb-3">
-                    <strong>User 1:</strong>
-                    <p>This is a comment.</p>
-                </div>
-                <div class="border p-3 mb-3">
-                    <strong>User 2:</strong>
-                    <p>Another comment here!</p>
-                </div>
+                {% for comment in comments %}
+                    <div class="border p-3 mb-3">
+                        <strong>{{comment.email}}</strong>
+                        <h6>{{comment.subject}}</h6>
+                        <p>{{comment.message}}</p>
+                        <p><span class="bi bi-clock"></span> {{comment.created_date|naturaltime}}</p>
+                    </div>
+                {% empty %}
+                        <div class="border p-3 mb-3">
+                            <strong> No comment yet! </strong>
+                        </div>
+                    
+                {% endfor %}
+                
             </div>
         </div>
     </div>

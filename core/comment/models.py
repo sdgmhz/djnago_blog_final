@@ -19,4 +19,4 @@ class Comment(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.email}-{self.post.tile}'
+        return f'{self.email}-{self.post.title}'
