@@ -21,8 +21,8 @@
                  <a  class="text-decoration-none link-info" href="{% url 'blog:post_category' category.name %}">{{category}}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}</span>
             <p class="card-text">Author: <a class="text-decoration-none link-secondary" href="{% url 'blog:post_author' post.author %}">{{ post.author }}</a></p>
-            <p class="card-text">views: {{ post.counted_views|intcomma }}</p>
-            <span class="card-text">published at: {{ post.created_date|naturaltime }}</span>
+            <p class="card-text"><i class="bi bi-eye"></i> : {{ post.counted_views|intcomma }}</p>
+            <span class="card-text">published {{ post.created_date|naturaltime }}</span>
             <p>{{post.content|safe}}</p>
             {% if request.user == post.author.user %}
             <a href="{% url 'blog:post_update' post.id %}" class="btn btn-warning">Edit</a>
