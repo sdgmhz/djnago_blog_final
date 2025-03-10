@@ -1,6 +1,7 @@
 {% extends "_base.html" %}
 {% load crispy_forms_tags %}
 
+
 {% block title %}
 Create Or Update A Post
 {% endblock title %}
@@ -14,12 +15,47 @@ Create Or Update A Post
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="text-center">Create Your Post</h3>
+                    <h3 class="text-center">Create/Update Your Post</h3>
                     <form action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{form|crispy}}
+                        <div class="mb-3">
+                            <label for="id_image" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="id_image" name="image">
+                            {% if form.instance.image %}
+                                <p>Current Image: <a href="{{ form.instance.image.url }}" target="_blank">View</a></p>
+                            {% endif %}
+                        </div>
                     
-                        <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+                        <div class="mb-3">
+                            <label for="id_title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="id_title" name="title" value="{{ form.instance.title }}" required>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="id_content" class="form-label">Content</label>
+                            <textarea class="form-control" id="id_content" name="content" rows="5" required>{{ form.instance.content }}</textarea>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="id_category" class="form-label">Category</label>
+                            <select multiple class="form-select" id="id_category" name="category">
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}" {% if category in form.instance.category.all %}selected{% endif %}>
+                                        {{ category.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="id_published_date" class="form-label">Published Date</label>
+                            <input type="datetime-local" class="form-control" id="id_published_date" name="published_date"
+                                   value="{{ form.instance.published_date|date:'Y-m-d\TH:i' }}">
+                        </div>
+                    
+                        
+                    
+                        <button type="submit" class="btn btn-primary w-100">Submit Post</button>
                     </form>
                     
                 </div>

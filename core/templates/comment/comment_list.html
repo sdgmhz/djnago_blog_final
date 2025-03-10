@@ -1,0 +1,83 @@
+{% extends "_base.html" %}
+{% load humanize %}
+
+{% block title %}
+Your Comments
+{% endblock title %}
+
+{% block content %}
+<h1 class="mb-4">Manage your comment</h1>
+
+<h1 class="mb-4">Comments of {{user}}</h1>
+<h3>dear {{user}} you can edit and delete your comments here:</h3>
+
+
+<div class="row">
+    {% for comment in comments %}
+    <div class="col-md-6 mb-6 mt-3">
+        <div class="card">
+            
+            <div class="card-body">
+                <p class="card-title">Subject: <a href="{{ comment.get_absolute_url }}" class="text-decoration-none link-success">{{ comment.subject }}</a></p>
+               
+                <p class="card-text">By: you ({{ comment.email }})</p>
+                <p class="card-text">On post:<a href="{{ comment.post.get_absolute_url }}" class="text-decoration-none link-info"> {{ comment.post.title }}</a></p>
+                <span class="card-text"><span class="bi bi-clock"></span> {{ comment.created_date|naturaltime }}</span>
+
+                <p class="card-text">Message: {{comment.message|truncatewords:5}}</p>
+                <p class="card-text">Recommendation: 
+                    <span>
+                        {% if comment.recommend == 'yes'%}
+
+                        <span style="color: blue;">{{comment.recommend}}</span></p>
+                        {% else %}
+                        <span style="color: red;">{{comment.recommend}}</span></p>
+                        {% endif %}
+                    </span>
+                </p>
+
+                <p class="card-text">Admin confirmation: 
+                    <span>
+                        {% if comment.approved%}
+
+                        <span style="color: blue;">Yes</span></p>
+                        {% else %}
+                        <span style="color: red;">Not yest!</span></p>
+                        {% endif %}
+                    </span>
+                </p>
+                
+            </div>
+            <div style="display: flex; gap: 10px;" class="mb-3 mx-auto"> 
+                <a href="{{ comment.get_absolute_url }}" class="btn btn-primary">Read More</a>
+                
+                <a class="btn btn-warning" href="{% url 'comment:comment_update' comment.id %}">Edit</a>
+                <a class="btn btn-danger" href="{% url 'comment:comment_delete' comment.id %}">Delete</a>
+                
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+
+<nav aria-label="Page navigation" class="mt-3">
+    <ul  class="pagination  justify-content-center p-2" style="position:sticky; bottom: 0; left: 50%;">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a></li>
+          {% endif %}
+          
+          <li class="page-item"><a class="page-link" href="#">{{page_obj.number}}</a></li>
+          
+            {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{page_obj.paginator.num_pages}}">Last</a></li>
+
+          {% endif %}
+    </ul>
+</nav>
+</div>
+
+{% endblock content %}

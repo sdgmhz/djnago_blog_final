@@ -1,0 +1,39 @@
+{% extends "_base.html" %}
+{% load humanize %}
+
+{% block title %}
+Comment Detail
+{% endblock title %}
+
+{% block content %}
+<h1 class="mb-4">Details of your comment</h1>
+
+<h1 class="mb-4">Comment "{{comment.subject}}" of {{user}}</h1>
+<h3>dear {{user}} you can edit and delete your comment here:</h3>
+
+
+<div class="row">
+    <div class="col-md-6 mb-6 mt-3">
+        <div class="card">
+            
+            <div class="card-body">
+                <p class="card-title">Subject: <a href="{{ comment.get_absolute_url }}" class="text-decoration-none link-success">{{ comment.subject }}</a></p>
+               
+                <p class="card-text">By: you ({{ comment.email }})</p>
+                <p class="card-text">On post:<a href="{{ comment.post.get_absolute_url }}" class="text-decoration-none link-info"> {{ comment.post.title }}</a></p>
+                <span class="card-text"><span class="bi bi-clock"></span> {{ comment.created_date|naturaltime }}</span>
+
+                <p class="card-text">Message: {{comment.message}}</p>
+            </div>
+            <div style="display: flex; gap: 10px;" class="mb-3 mx-auto"> 
+                <a href="{{ comment.get_absolute_url }}" class="btn btn-primary">Read More</a>
+                
+                <a class="btn btn-warning" href="{% url 'comment:comment_update' comment.id %}">Edit</a>
+                <a class="btn btn-danger" href="{% url 'comment:comment_delete' comment.id %}">Delete</a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
