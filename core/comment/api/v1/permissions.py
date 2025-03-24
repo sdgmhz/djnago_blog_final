@@ -1,0 +1,10 @@
+from rest_framework import permissions
+
+
+class IsOwner(permissions.BasePermission):
+    """ check to see if the author of the comment is implementing with it """
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return obj.email == request.user.email
+    
