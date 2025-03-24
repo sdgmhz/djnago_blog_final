@@ -23,8 +23,10 @@ class Comment(models.Model):
     def __str__(self):
         """Return a string representation of the comment."""
         return f'{self.email}-{self.post.title}'
-    
+
     def get_absolute_url(self):
         """Return the absolute URL for the comment detail view."""
         return reverse("comment:comment_detail", kwargs={"pk": self.pk})
-    
+
+    def get_snippet(self):
+        return ' ' .join(self.message.split()[:10]) + '...'

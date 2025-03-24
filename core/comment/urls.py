@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = "comment"
@@ -15,5 +15,8 @@ urlpatterns = [
 
     # Route to delete a comment
     path("<int:pk>/delete/", views.CommentDeleteView.as_view(), name="comment_delete"),
+
+    # Include API URLs from the comments's API version
+    path('api/v1/', include('comment.api.v1.urls')),
 
 ]

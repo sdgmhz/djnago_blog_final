@@ -9,7 +9,7 @@ from ...models import Post, Category
 
 """ model serializer for Post """
 class PostSerializer(serializers.ModelSerializer):
-    """ a read only field to get the url of duty instance """
+    """ a read only field to get the url of post instance """
     absolute_url = serializers.SerializerMethodField()
 
     """ a field to show a summary of content in list page """
