@@ -28,6 +28,7 @@ class Post(models.Model):
     def increment_counted_views(self):
         self.counted_views += 1
         self.save()
+
     
 
 class Category(models.Model):
