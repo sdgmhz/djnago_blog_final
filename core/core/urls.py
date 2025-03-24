@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('website.urls')),
     path('blog/', include('blog.urls')),
     path('comments/', include('comment.urls')),
+    path('api-auth/', include('rest_framework.urls')),
     path('captcha/', include('captcha.urls')),
     path('refresh-captcha/', refresh_captcha, name='captcha-refresh'),
 ]

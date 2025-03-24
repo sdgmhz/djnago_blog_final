@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
@@ -16,5 +16,7 @@ urlpatterns = [
     path('<int:pk>/delete/', views.PostDeleteView.as_view(), name="post_delete"),
 
     path('manage_my_post/',views.ManagePostListView.as_view(), name='post_management'),
-    path('categories/',views.CategoryListCreateView.as_view(), name='category_list'), 
+    path('categories/',views.CategoryListCreateView.as_view(), name='category_list'),
+
+    path('api/v1/', include('blog.api.v1.urls')), 
 ]

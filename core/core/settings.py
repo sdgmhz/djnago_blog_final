@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'captcha',
+    'rest_framework',
     
 ]
 
@@ -152,3 +153,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # crispy forms config
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# rest framework config
+REST_FRAMEWORK = {
+    
+}
