@@ -5,7 +5,12 @@ from . import views
 app_name = 'website'
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name = 'website/index.html'), name="home"),
-    path('about/', TemplateView.as_view(template_name = 'website/about.html'), name="about"),
+    # Route to the homepage of the website
+    path('', TemplateView.as_view(template_name='website/index.html'), name="home"),
+
+    # Route to the about page
+    path('about/', TemplateView.as_view(template_name='website/about.html'), name="about"),
+
+    # Route to the contact page with a form for users to send messages
     path('contact/', views.ContactCreateView.as_view(), name="contact"),
 ]

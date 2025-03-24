@@ -1,9 +1,11 @@
 from django.db import models
 from django.urls import reverse
-# Create your models here.
+
 
 
 class Post(models.Model):
+    """Model representing a blog post"""
+
     STATUS_CHOICES = (
         ('drf', 'Draft'),
         ('pub', 'Published'),
@@ -20,18 +22,22 @@ class Post(models.Model):
     published_date = models.DateTimeField()
 
     def __str__(self):
+        """ Return the title of the post as a string """
         return self.title
     
     def get_absolute_url(self):
+        """Returns the URL to view the detailed post"""
         return reverse("blog:post_detail", kwargs={"pk": self.pk})
     
     def increment_counted_views(self):
+        """Increment the view count for the post by 1 and save it"""
         self.counted_views += 1
         self.save()
 
     
 
 class Category(models.Model):
+    """ Model representing a blog post category """
     name = models.CharField(max_length=255)
 
     def __str__(self):

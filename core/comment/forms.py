@@ -4,6 +4,7 @@ from .models import Comment
 
 
 class CommentForm(forms.ModelForm):
+    """Form for submitting a comment with CAPTCHA verification."""
     captcha = CaptchaField()
 
     class Meta:

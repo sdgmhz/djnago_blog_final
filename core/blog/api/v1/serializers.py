@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 from django.utils.html import strip_tags
+from django.utils import timezone
 
 from accounts.models import Profile
 from ...models import Post, Category
@@ -44,7 +46,8 @@ class PostSerializer(serializers.ModelSerializer):
     
     def get_absolute_url(self, post):
         request = self.context.get('request')
-        return request.build_absolute_uri(post.pk)
+        # return request.build_absolute_uri(post.pk)
+        return reverse("blog:api-v1:post-detail", kwargs={'pk': post.pk}, request=request)
     
     def get_author(self, post):
         return post.author.user.email
@@ -82,3 +85,33 @@ class PostSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
     
 
+""" model serializer for Category"""
+class CategorySerializer(serializers.ModelSerializer):
+    """ add a field to show the posts of each category"""
+    posts = serializers.SerializerMethodField()
+
+    """ a read only field to get the url of category instance """
+    absolute_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Category
+        fields = ['id', 'name','posts', 'absolute_url']
+
+    def get_posts(self, obj):
+        posts = Post.objects.filter(status='pub', published_date__lte=timezone.now(), category=obj)
+        return [f'{post.title} (post-id = {post.id})' for post in posts]
+    
+    def get_absolute_url(self, category):
+        request = self.context.get('request')
+        return reverse("blog:api-v1:category-detail", kwargs={'pk': category.pk}, request=request)
+
+    """ separate representation in list and detail """
+    def to_representation(self, instance):
+        request = self.context.get('request')
+
+        rep = super().to_representation(instance)
+
+        if request.parser_context.get('kwargs'):
+            """ omit absolute_url in detail page """
+            rep.pop('absolute_url', None)
+        return rep

@@ -4,35 +4,45 @@ from captcha.fields import CaptchaField
 
 User = get_user_model()
 
+
 class CustomUserCreationForm(UserCreationForm):
-    capthca =  CaptchaField()
+    """Custom user creation form with captcha."""
+    capthca = CaptchaField()
 
     class Meta:
         model = User
         fields = ('email', 'password1', 'password2')
 
+
 class CustomAuthenticationForm(AuthenticationForm):
-    captcha= CaptchaField()
+    """Custom authentication form with captcha."""
+    captcha = CaptchaField()
 
     class Meta:
         model = User
         fields = ('email', 'password')
 
+
 class CustomPasswordChangeForm(PasswordChangeForm):
+    """Custom password change form with captcha."""
     captcha = CaptchaField()
 
     class Meta:
         model = User
         fields = '__all__'
+
 
 class CustomPasswordResetForm(PasswordResetForm):
+    """Custom password reset form with captcha."""
     captcha = CaptchaField()
 
     class Meta:
         model = User
         fields = '__all__'
 
+
 class CustomSetPasswordForm(SetPasswordForm):
+    """Custom set password form with captcha."""
     captcha = CaptchaField()
 
     class Meta:

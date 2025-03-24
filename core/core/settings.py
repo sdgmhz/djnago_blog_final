@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'captcha',
     'rest_framework',
+    'django_filters',
     
 ]
 
