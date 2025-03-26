@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'captcha',
     'rest_framework',
     'django_filters',
+    'drf_yasg',
     
 ]
 

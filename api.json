@@ -1,0 +1,574 @@
+swagger: '2.0'
+info:
+  title: Snippets API
+  description: Test description
+  termsOfService: https://www.google.com/policies/terms/
+  contact:
+    email: contact@snippets.local
+  license:
+    name: BSD License
+  version: v1
+host: 127.0.0.1:8000
+schemes:
+- http
+basePath: /
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+- Basic: []
+paths:
+  /blog/api/v1/category/:
+    get:
+      operationId: blog_api_v1_category_list
+      description: model viewset for implement CRUD for category
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Category'
+      tags:
+      - blog
+    post:
+      operationId: blog_api_v1_category_create
+      description: model viewset for implement CRUD for category
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Category'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Category'
+      tags:
+      - blog
+    parameters: []
+  /blog/api/v1/category/{id}/:
+    get:
+      operationId: blog_api_v1_category_read
+      description: model viewset for implement CRUD for category
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Category'
+      tags:
+      - blog
+    put:
+      operationId: blog_api_v1_category_update
+      description: model viewset for implement CRUD for category
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Category'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Category'
+      tags:
+      - blog
+    patch:
+      operationId: blog_api_v1_category_partial_update
+      description: model viewset for implement CRUD for category
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Category'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Category'
+      tags:
+      - blog
+    delete:
+      operationId: blog_api_v1_category_delete
+      description: model viewset for implement CRUD for category
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - blog
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this category.
+      required: true
+      type: integer
+  /blog/api/v1/post/:
+    get:
+      operationId: blog_api_v1_post_list
+      description: model viewset for implement CRUD for post
+      parameters:
+      - name: author
+        in: query
+        description: author
+        required: false
+        type: string
+      - name: category
+        in: query
+        description: category
+        required: false
+        type: string
+      - name: published_date__gt
+        in: query
+        description: published_date__gt
+        required: false
+        type: string
+      - name: published_date__lt
+        in: query
+        description: published_date__lt
+        required: false
+        type: string
+      - name: search
+        in: query
+        description: A search term.
+        required: false
+        type: string
+      - name: ordering
+        in: query
+        description: Which field to use when ordering the results.
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Post'
+      tags:
+      - blog
+    post:
+      operationId: blog_api_v1_post_create
+      description: model viewset for implement CRUD for post
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Post'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Post'
+      tags:
+      - blog
+    parameters: []
+  /blog/api/v1/post/{id}/:
+    get:
+      operationId: blog_api_v1_post_read
+      description: model viewset for implement CRUD for post
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Post'
+      tags:
+      - blog
+    put:
+      operationId: blog_api_v1_post_update
+      description: model viewset for implement CRUD for post
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Post'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Post'
+      tags:
+      - blog
+    patch:
+      operationId: blog_api_v1_post_partial_update
+      description: model viewset for implement CRUD for post
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Post'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Post'
+      tags:
+      - blog
+    delete:
+      operationId: blog_api_v1_post_delete
+      description: model viewset for implement CRUD for post
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - blog
+    parameters:
+    - name: id
+      in: path
+      required: true
+      type: string
+  /comments/api/v1/comments/:
+    get:
+      operationId: comments_api_v1_comments_list
+      description: API viewset for managing comments with filtering, searching, and
+        pagination.
+      parameters:
+      - name: email
+        in: query
+        description: email
+        required: false
+        type: string
+      - name: post
+        in: query
+        description: post
+        required: false
+        type: string
+      - name: recommend
+        in: query
+        description: recommend
+        required: false
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+      - name: search
+        in: query
+        description: A search term.
+        required: false
+        type: string
+      - name: ordering
+        in: query
+        description: Which field to use when ordering the results.
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Comment'
+      tags:
+      - comments
+    post:
+      operationId: comments_api_v1_comments_create
+      description: API viewset for managing comments with filtering, searching, and
+        pagination.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Comment'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      tags:
+      - comments
+    parameters: []
+  /comments/api/v1/comments/{id}/:
+    get:
+      operationId: comments_api_v1_comments_read
+      description: API viewset for managing comments with filtering, searching, and
+        pagination.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      tags:
+      - comments
+    put:
+      operationId: comments_api_v1_comments_update
+      description: API viewset for managing comments with filtering, searching, and
+        pagination.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Comment'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      tags:
+      - comments
+    patch:
+      operationId: comments_api_v1_comments_partial_update
+      description: API viewset for managing comments with filtering, searching, and
+        pagination.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Comment'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      tags:
+      - comments
+    delete:
+      operationId: comments_api_v1_comments_delete
+      description: API viewset for managing comments with filtering, searching, and
+        pagination.
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - comments
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this comment.
+      required: true
+      type: integer
+definitions:
+  Category:
+    required:
+    - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+        minLength: 1
+      posts:
+        title: Posts
+        type: string
+        readOnly: true
+      absolute_url:
+        title: Absolute url
+        type: string
+        readOnly: true
+  Post:
+    required:
+    - title
+    - content
+    - category
+    - published_date
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      author:
+        title: Author
+        type: string
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 255
+        minLength: 1
+      image:
+        title: Image
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      snippet:
+        title: Snippet
+        type: string
+        readOnly: true
+      absolute_url:
+        title: Absolute url
+        type: string
+        readOnly: true
+      content:
+        title: Content
+        type: string
+        minLength: 1
+      status:
+        title: Status
+        type: string
+        enum:
+        - drf
+        - pub
+        readOnly: true
+      counted_views:
+        title: Counted views
+        type: integer
+        readOnly: true
+      category:
+        type: array
+        items:
+          type: string
+        uniqueItems: true
+      created_date:
+        title: Created date
+        type: string
+        format: date-time
+        readOnly: true
+      updated_date:
+        title: Updated date
+        type: string
+        format: date-time
+        readOnly: true
+      published_date:
+        title: Published date
+        type: string
+        format: date-time
+  Comment:
+    required:
+    - post
+    - subject
+    - message
+    - recommend
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      post:
+        title: Post
+        type: string
+      name:
+        title: Name
+        type: string
+        maxLength: 255
+      email:
+        title: Email
+        type: string
+        format: email
+        readOnly: true
+        minLength: 1
+      subject:
+        title: Subject
+        type: string
+        maxLength: 255
+        minLength: 1
+      snippet:
+        title: Snippet
+        type: string
+        readOnly: true
+      absolute_url:
+        title: Absolute url
+        type: string
+        readOnly: true
+      message:
+        title: Message
+        type: string
+        minLength: 1
+      recommend:
+        title: Recommend
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+      approved:
+        title: Approved
+        type: boolean
+        readOnly: true
+      created_date:
+        title: Created date
+        type: string
+        format: date-time
+        readOnly: true
+      updated_date:
+        title: Updated date
+        type: string
+        format: date-time
+        readOnly: true
