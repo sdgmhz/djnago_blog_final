@@ -12,5 +12,6 @@ django-crispy-forms
 crispy-bootstrap4
 django-simple-captcha
 drf-yasg[validation]
+drf-spectacular[sidecar]
 
 # deployment modules
