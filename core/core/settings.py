@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'captcha',
     'rest_framework',
     'django_filters',
+    'drf_yasg',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
     
 ]
 
@@ -157,5 +160,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # rest framework config
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     
 }

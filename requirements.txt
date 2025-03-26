@@ -1,14 +1,17 @@
+# general modules
 Django>4.2,<4.3
-
 pillow
 python-decouple
-
-django-crispy-forms
-crispy-bootstrap4
-
-django-simple-captcha
-
-# restframework
 djangorestframework
+
+
+# third party modules
 markdown
 django-filter
+django-crispy-forms
+crispy-bootstrap4
+django-simple-captcha
+drf-yasg[validation]
+drf-spectacular[sidecar]
+
+# deployment modules
