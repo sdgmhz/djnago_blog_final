@@ -89,10 +89,10 @@ class CustomAuthTokenSerializer(serializers.Serializer):
                 msg = _('Unable to log in with provided credentials.')
                 raise serializers.ValidationError(msg, code='authorization')
             # check if user is verified or not
-            # if not user.is_verified:
-            #     raise serializers.ValidationError(
-            #         {"detail": "user is not verified"}
-            #     )
+            if not user.is_verified:
+                raise serializers.ValidationError(
+                    {"detail": "user is not verified"}
+                )
         else:
             msg = _('Must include "email" and "password".')
             raise serializers.ValidationError(msg, code='authorization')
@@ -107,6 +107,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         """Validate and add email and user ID to the token response."""
         validated_data = super().validate(attrs)
+        # check if user is verified or not
+        if not self.user.is_verified:
+            raise serializers.ValidationError(
+                {"detail": "user is not verified"}
+            )
         validated_data["email"] = self.user.email
         validated_data["user_id"] = self.user.pk
         return validated_data
@@ -122,6 +127,12 @@ class ChangePasswordSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         """Validate that the new passwords match and meet security requirements."""
+        # check if user is verified or not
+        if not self.context.get('user').is_verified:
+            raise serializers.ValidationError(
+                {"detail": "user is not verified"}
+            )
+        
         if attrs.get('new_password') != attrs.get('new_password1'):
             raise serializers.ValidationError({'detail': "passwords do not match"})
         try:
