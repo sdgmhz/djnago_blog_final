@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers import RegistrationSerializer, CustomAuthTokenSerializer, CustomTokenObtainPairSerializer, ChangePasswordSerializer
+from ..serializers import RegistrationSerializer, CustomAuthTokenSerializer, CustomTokenObtainPairSerializer, ChangePasswordSerializer
 
 
 class RegistrationApiView(GenericAPIView):
@@ -94,3 +94,5 @@ class ChangePasswordApiView(GenericAPIView):
         captcha_url = captcha_image_url(new_captcha)
 
         return Response({"captcha_key": new_captcha, "captcha_image_url": captcha_url})
+    
+

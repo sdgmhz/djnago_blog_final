@@ -1,6 +1,5 @@
 from django.urls import path
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView
 )
@@ -30,6 +29,8 @@ urlpatterns = [
 
     # Route to the change password API, which allows users to update their password
     path('change-password/', views.ChangePasswordApiView.as_view(), name='change-password'),
+
+
 
 
 

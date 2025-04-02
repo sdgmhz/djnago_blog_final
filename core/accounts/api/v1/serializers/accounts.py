@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+
 User = get_user_model()
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -141,3 +142,5 @@ class ChangePasswordSerializer(serializers.Serializer):
         new_captcha = CaptchaStore.generate_key()
         self.fields["captcha"].help_text = f'<img src="{captcha_image_url(new_captcha)}" alt="Captcha Image"/>'
         self.captcha_key = new_captcha
+
+
