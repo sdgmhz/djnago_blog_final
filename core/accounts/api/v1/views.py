@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers import RegistrationSerializer, CustomAuthTokenSerializer, CustomTokenObtainPairSerializer
+from .serializers import RegistrationSerializer, CustomAuthTokenSerializer, CustomTokenObtainPairSerializer, ChangePasswordSerializer
 
 
 class RegistrationApiView(GenericAPIView):
@@ -59,8 +59,38 @@ class CustomDiscardAuthToken(APIView):
         """Delete the auth token to log the user out."""
         request.user.auth_token.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     """View for obtaining a JWT token pair using a custom serializer."""
     serializer_class = CustomTokenObtainPairSerializer
+
+
+class ChangePasswordApiView(GenericAPIView):
+    """API view for changing user password with authentication and captcha support."""
+
+    serializer_class = ChangePasswordSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self, queryset=None):
+        """Retrieve the authenticated user object."""
+        return self.request.user
+
+    def put(self, request, *args, **kwargs):
+        """Handle password change request after validating old password and new password."""
+        self.object = self.get_object()
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response({"detail": "old password is wrong"}, status=status.HTTP_400_BAD_REQUEST)
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response({'detail': 'password changed successfully'}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, *args, **kwargs):
+        """Generate and return a new captcha for password change validation."""
+        new_captcha = CaptchaStore.generate_key()
+        captcha_url = captcha_image_url(new_captcha)
+
+        return Response({"captcha_key": new_captcha, "captcha_image_url": captcha_url})

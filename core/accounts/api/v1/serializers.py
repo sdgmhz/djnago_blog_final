@@ -56,6 +56,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
  
 class CustomAuthTokenSerializer(serializers.Serializer):
     """Serializer for user authentication via email and password."""
+
     email = serializers.EmailField(
         label=_("Email"),
         write_only=True
@@ -108,3 +109,35 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         validated_data["email"] = self.user.email
         validated_data["user_id"] = self.user.pk
         return validated_data
+    
+class ChangePasswordSerializer(serializers.Serializer):
+    """Serializer for changing user password with captcha validation."""
+
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    new_password1 = serializers.CharField(required=True)
+    captcha = serializers.CharField(write_only=True)
+
+
+    def validate(self, attrs):
+        """Validate that the new passwords match and meet security requirements."""
+        if attrs.get('new_password') != attrs.get('new_password1'):
+            raise serializers.ValidationError({'detail': "passwords do not match"})
+        try:
+            validate_password(attrs.get('new_password'))
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError({"new_password": list(e.messages)})
+        return super().validate(attrs)
+    
+    def validate_captcha(self, value):
+        """Validate that the provided captcha response is correct."""
+        if not CaptchaStore.objects.filter(response=value).exists():
+            raise exceptions.ValidationError("invalid captcha")
+        return value
+    
+    def __init__(self, *args, **kwargs):
+        """Initialize the serializer and generate a new captcha image."""
+        super().__init__(*args, **kwargs)
+        new_captcha = CaptchaStore.generate_key()
+        self.fields["captcha"].help_text = f'<img src="{captcha_image_url(new_captcha)}" alt="Captcha Image"/>'
+        self.captcha_key = new_captcha

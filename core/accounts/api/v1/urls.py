@@ -28,6 +28,9 @@ urlpatterns = [
     # Route to verify the validity of a given JWT token
     path('jwt/verify/', TokenVerifyView.as_view(), name="jwt-verify"),
 
+    # Route to the change password API, which allows users to update their password
+    path('change-password/', views.ChangePasswordApiView.as_view(), name='change-password'),
+
 
 
 
