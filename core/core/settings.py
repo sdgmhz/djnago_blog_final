@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'drf_spectacular_sidecar',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'mail_templated',
     
 ]
 
@@ -155,11 +156,18 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_REDIRECT_URL = 'website:home'
 LOGOUT_REDIRECT_URL = 'website:home'
 
-# email backend
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # crispy forms config
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# email send config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = False
+EMAIL_HOST = 'smtp4dev'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 25
 
 # rest framework config
 REST_FRAMEWORK = {
