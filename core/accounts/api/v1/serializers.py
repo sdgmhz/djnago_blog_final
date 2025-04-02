@@ -6,6 +6,7 @@ from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 User = get_user_model()
 
@@ -96,3 +97,14 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """Custom serializer to include email and user ID in JWT token response."""
+    
+    def validate(self, attrs):
+        """Validate and add email and user ID to the token response."""
+        validated_data = super().validate(attrs)
+        validated_data["email"] = self.user.email
+        validated_data["user_id"] = self.user.pk
+        return validated_data
