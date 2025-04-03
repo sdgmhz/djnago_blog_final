@@ -62,6 +62,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
 
 
-
-
-    
+class UsedPasswordResetToken(models.Model):
+    """
+    Stores used password reset tokens to prevent reuse.
+    Each token is linked to a specific user and has a usage status.
+    """
+    token = models.CharField(max_length=255, unique=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    used = models.BooleanField(default=False)

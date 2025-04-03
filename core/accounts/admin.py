@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 
-from .models import Profile
+from .models import Profile, UsedPasswordResetToken
 
 UserModel = get_user_model()
 
@@ -30,3 +30,7 @@ class CustomUserAdmin(UserAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     model = Profile
     list_display = ("user", "first_name", "last_name",)
+
+
+
+admin.site.register(UsedPasswordResetToken)

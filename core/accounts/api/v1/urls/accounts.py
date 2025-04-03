@@ -30,9 +30,17 @@ urlpatterns = [
     # Route to the change password API, which allows users to update their password
     path('change-password/', views.ChangePasswordApiView.as_view(), name='change-password'),
 
+    # Route to confirm account activation with a token
+    path('activation/confirm/<str:token>/', views.ActivationApiView.as_view(), name="activation"),
 
+    # Route to resend activation email
+    path('activation/resend/', views.ActivationResendApiView.as_view(), name="activation-resend"),
 
+    # Route to request password reset by providing registered email
+    path('password/reset/',views.PasswordResetApiView.as_view(), name='password-reset'),
 
+    # Route to confirm password reset with the provided token
+    path('password/reset/confirm/<str:token>/', views.PasswordResetConfirmApiView.as_view(), name="password-reset-confirm"),
 
 
 ]

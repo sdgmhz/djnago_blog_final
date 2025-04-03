@@ -155,3 +155,51 @@ class ChangePasswordSerializer(serializers.Serializer):
         self.captcha_key = new_captcha
 
 
+class ActivationResendAndPasswordResetSerializer(serializers.Serializer):
+    """Serializer for resending activation email and resetting password."""
+    email = serializers.EmailField(required=True)
+    captcha = serializers.CharField(write_only=True)
+
+    def validate_captcha(self, value):
+        """Validate if the provided captcha is correct."""
+        if not CaptchaStore.objects.filter(response=value).exists():
+            raise exceptions.ValidationError("invalid captcha")
+        return value
+    
+    def __init__(self, *args, **kwargs):
+        """Initialize serializer and generate a new captcha."""
+        super().__init__(*args, **kwargs)
+        new_captcha = CaptchaStore.generate_key()
+        self.fields["captcha"].help_text = f'<img src="{captcha_image_url(new_captcha)}" alt="Captcha Image"/>'
+        self.captcha_key = new_captcha
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    """Handles password reset confirmation with password validation and captcha verification."""
+    new_password = serializers.CharField(required=True)
+    new_password1 = serializers.CharField(required=True)
+    captcha = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        """Validates that passwords match and meet complexity requirements."""
+        if attrs.get("new_password") != attrs.get("new_password1"):
+            raise serializers.ValidationError({"detail": "passwords don't match!"})
+        try:
+            validate_password(attrs.get("new_password"))
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError({'password': list(e.messages)})
+        return super().validate(attrs)
+    
+    def validate_captcha(self, value):
+        """Validates that the provided captcha response is correct."""
+        if not CaptchaStore.objects.filter(response=value).exists():
+            raise exceptions.ValidationError("invalid captcha")
+        return value
+    
+    def __init__(self, *args, **kwargs):
+        """Initializes the serializer and generates a new captcha challenge."""
+        super().__init__(*args, **kwargs)
+        new_captcha = CaptchaStore.generate_key()
+        self.fields["captcha"].help_text = f'<img src="{captcha_image_url(new_captcha)}" alt="Captcha Image"/>'
+        self.captcha_key = new_captcha
+
