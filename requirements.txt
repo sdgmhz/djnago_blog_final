@@ -13,5 +13,7 @@ crispy-bootstrap4
 django-simple-captcha
 drf-yasg[validation]
 drf-spectacular[sidecar]
+djangorestframework-simplejwt
+django-mail-templated
 
 # deployment modules

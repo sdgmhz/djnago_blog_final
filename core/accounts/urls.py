@@ -36,4 +36,7 @@ urlpatterns = [
     # Route to include default Django auth URLs
     path('', include('django.contrib.auth.urls')),
 
+    # Include API URLs from the accounts's API version
+    path('api/v1/', include('accounts.api.v1.urls')),
+
 ]

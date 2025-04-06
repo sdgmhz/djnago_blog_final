@@ -8,14 +8,14 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 
 from .serializers import PostSerializer, CategorySerializer
 from ...models import Post, Category
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsVerifiedOrReadOnly
 from .paginations import CustomPagination
 
 
 class PostModelViewSet(viewsets.ModelViewSet):
     """model viewset for implement CRUD for post"""
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, IsVerifiedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = {'author':["exact"], 'category':["exact"], 'published_date':['gt', 'lt']}
     search_fields = ['title', 'content']
@@ -28,6 +28,6 @@ class PostModelViewSet(viewsets.ModelViewSet):
 class CategoryModelViewSet(viewsets.ModelViewSet):
     """model viewset for implement CRUD for category"""
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsVerifiedOrReadOnly]
     pagination_class = CustomPagination
     queryset = Category.objects.all()
