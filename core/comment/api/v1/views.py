@@ -5,14 +5,14 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 
 from ...models import Comment
 from .serializers import CommentSerializer
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsVerifiedOrReadOnly
 from .paginations import CustomPagination
 
 
 class CommentModelViewSet(viewsets.ModelViewSet):
     """API viewset for managing comments with filtering, searching, and pagination."""
     queryset = Comment.objects.filter(approved=True)
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, IsVerifiedOrReadOnly]
     serializer_class = CommentSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = {'post', 'recommend', 'email'}
