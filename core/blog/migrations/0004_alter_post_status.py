@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0003_remove_post_category_post_category'),
+        ("blog", "0003_remove_post_category_post_category"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='post',
-            name='status',
-            field=models.CharField(choices=[('drf', 'Draft'), ('pub', 'Published')], default='drf', max_length=3),
+            model_name="post",
+            name="status",
+            field=models.CharField(
+                choices=[("drf", "Draft"), ("pub", "Published")],
+                default="drf",
+                max_length=3,
+            ),
         ),
     ]

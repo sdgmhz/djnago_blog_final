@@ -6,21 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0003_usedpasswordresettoken'),
+        ("accounts", "0003_usedpasswordresettoken"),
     ]
 
     operations = [
         migrations.RemoveIndex(
-            model_name='usedpasswordresettoken',
-            name='accounts_us_token_887108_idx',
+            model_name="usedpasswordresettoken",
+            name="accounts_us_token_887108_idx",
         ),
         migrations.RemoveIndex(
-            model_name='usedpasswordresettoken',
-            name='accounts_us_user_id_f8d9ab_idx',
+            model_name="usedpasswordresettoken",
+            name="accounts_us_user_id_f8d9ab_idx",
         ),
         migrations.AddField(
-            model_name='usedpasswordresettoken',
-            name='used',
+            model_name="usedpasswordresettoken",
+            name="used",
             field=models.BooleanField(default=False),
         ),
     ]

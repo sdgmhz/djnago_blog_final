@@ -17,3 +17,7 @@ djangorestframework-simplejwt
 django-mail-templated
 
 # deployment modules
+
+# refactoring and test
+black
+flake8

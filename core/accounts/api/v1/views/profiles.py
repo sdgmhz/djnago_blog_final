@@ -11,6 +11,7 @@ from ....models import Profile
 
 class ProfileApiView(RetrieveUpdateAPIView):
     """API view for retrieving and updating user profile with captcha support."""
+
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
     queryset = Profile.objects.all()
@@ -20,7 +21,7 @@ class ProfileApiView(RetrieveUpdateAPIView):
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, user=self.request.user)
         return obj
-    
+
     def get(self, request, *args, **kwargs):
         """Retrieve user profile along with a new captcha image."""
         profile = self.get_object()
@@ -28,12 +29,14 @@ class ProfileApiView(RetrieveUpdateAPIView):
         new_captcha = CaptchaStore.generate_key()
         captcha_url = captcha_image_url(new_captcha)
         response_data = serializer.data
-        response_data.update({
-            "captcha_key": new_captcha,
-            "captcha_image_url": captcha_url,
-        })
+        response_data.update(
+            {
+                "captcha_key": new_captcha,
+                "captcha_image_url": captcha_url,
+            }
+        )
         return Response(response_data)
-    
+
     def get_serializer_context(self):
         """Provide additional context for the serializer, including the authenticated user."""
         context = super().get_serializer_context()

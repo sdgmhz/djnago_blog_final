@@ -9,19 +9,20 @@ class Profile(models.Model):
     """
     User profile model
     """
+
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='profile/', blank=True, null=True)
+    image = models.ImageField(upload_to="profile/", blank=True, null=True)
     description = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.email
-    
+
+
 @receiver(post_save, sender=CustomUser)
 def save_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-    

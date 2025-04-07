@@ -11,17 +11,22 @@ from .paginations import CustomPagination
 
 class CommentModelViewSet(viewsets.ModelViewSet):
     """API viewset for managing comments with filtering, searching, and pagination."""
+
     queryset = Comment.objects.filter(approved=True)
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, IsVerifiedOrReadOnly]
+    permission_classes = [
+        IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly,
+        IsVerifiedOrReadOnly,
+    ]
     serializer_class = CommentSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = {'post', 'recommend', 'email'}
-    search_fields = ['subject', 'message']
-    ordering_fields = ['created_date']
+    filterset_fields = {"post", "recommend", "email"}
+    search_fields = ["subject", "message"]
+    ordering_fields = ["created_date"]
     pagination_class = CustomPagination
 
     def get_serializer_context(self):
         """Inject the request object into the serializer context."""
         context = super().get_serializer_context()
-        context['request'] = self.request
+        context["request"] = self.request
         return context
