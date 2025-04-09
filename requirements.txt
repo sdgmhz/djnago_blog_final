@@ -18,6 +18,8 @@ django-mail-templated
 
 # deployment modules
 
-# refactoring and test
+# reformatting and test
 black
 flake8
+pytest
+pytest-django
