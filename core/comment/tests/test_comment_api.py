@@ -89,6 +89,8 @@ def sample_comment():
 
 @pytest.mark.django_db
 class TestCommentApi:
+    """Tests for Comment API endpoints"""
+
     client = APIClient()
 
     def test_get_comment_list_response_200_status_guest_user(self):
