@@ -60,6 +60,14 @@ class TestCategoryApi:
         response = self.client.post(url, data)
         assert response.status_code == 403
 
+    def test_create_category_response_201_status_verified_user(self, verified_user):
+        """Should return 204 for verified user when creating a category."""
+        url = reverse("blog:api-v1:category-list")
+        data = {"name": "test_cat2"}
+        self.client.force_authenticate(user=verified_user)
+        response = self.client.post(url, data)
+        assert response.status_code == 201
+
     def test_get_category_detail_response_200_status_guest_user(self, sample_category):
         """Should return 200 for guest user when retrieving category detail."""
         url = reverse("blog:api-v1:category-detail", kwargs={"pk": sample_category.id})
