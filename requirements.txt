@@ -15,6 +15,7 @@ drf-yasg[validation]
 drf-spectacular[sidecar]
 djangorestframework-simplejwt
 django-mail-templated
+django-cors-headers
 
 # deployment modules
 
