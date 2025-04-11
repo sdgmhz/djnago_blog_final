@@ -1,4 +1,11 @@
 from locust import HttpUser, task, between
 
 class QuickstartUser(HttpUser):
-    pass
+    
+    @task
+    def post_list(self):
+        self.client.get("/blog/api/v1/post/")
+    
+    @task
+    def category_list(self):
+        self.client.get("/blog/api/v1/category/")
