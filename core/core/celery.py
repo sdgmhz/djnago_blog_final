@@ -10,8 +10,7 @@ django.setup()
 from celery import Celery
 from celery.schedules import crontab
 
-# from duties.tasks import delete_done_duties
-
+from accounts.tasks import delete_unverified_accounts_after_a_week
 
 
 app = Celery("core")
@@ -28,10 +27,9 @@ app.autodiscover_tasks()
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    pass
-    # execute the task every 10 minutes
-    # sender.add_periodic_task(
-    #     crontab(minute="*/10"),
-    #     delete_done_duties.s(),
-    #     name="delete done duties(tasks) every 10 minutes",
-    # )
+    """Registers the periodic task that deletes unverified accounts to run every 10 minutes."""
+    sender.add_periodic_task(
+        crontab(minute="*/10"),
+        delete_unverified_accounts_after_a_week.s(),
+        name="Delete unverified user accounts that were created more than 7 days ago.",
+    )
