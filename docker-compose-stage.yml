@@ -2,6 +2,18 @@ version: "3.9"
 
 services:
 
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
   redis:
     container_name: redis
     image: redis
@@ -14,7 +26,7 @@ services:
   backend:
     container_name: backend
     build: .
-    command: sh -c "gunicorn core.wsgi --bind 0.0.0.0:8000"
+    command: sh -c "python manage.py migrate && python manage.py loaddata --exclude contenttypes data.json && gunicorn core.wsgi --bind 0.0.0.0:8000"
     volumes:
       - ./core:/app
       - static_volume:/app/static
@@ -25,11 +37,17 @@ services:
       - SECRET_KEY=django-insecure-i^fuaa8x23jw3j89j6x=rbu)40g^oqmti9c$$@7i7lz*2x+qye4
       - DEBUG=False
       # - ALLOWED_HOST = "*"
+      - DB_HOST=db
+      - DB_NAME=mydatabase
+      - DB_USER=myuser
+      - DB_PASSWORD=mypassword
     depends_on:
       - redis
+      - db
 
   worker_redis:
     build: .
+    container_name: worker_redis_celery
     command: sh -c "pip install django-redis && celery -A core worker --loglevel=info"
     volumes:
       - ./core:/app
@@ -39,6 +57,7 @@ services:
 
   beat:
     build: .
+    container_name: beat_redis_celery
     command: celery -A core beat --loglevel=info
     volumes:
       - .:/code/
@@ -64,6 +83,7 @@ services:
 volumes:
   static_volume:
   media_volume:
+  postgres_data:
 
 
  
