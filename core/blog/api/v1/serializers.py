@@ -135,3 +135,21 @@ class CategorySerializer(serializers.ModelSerializer):
             """omit absolute_url in detail page"""
             rep.pop("absolute_url", None)
         return rep
+
+
+class CryptoSerializer(serializers.Serializer):
+    """Serializer for selecting a specific cryptocurrency symbol."""
+
+    CRYPTO_CHOICES = (
+        ("BTCUSDT", "Bitcoin"),
+        ("ETHUSDT", "Ethereum"),
+        ("BCHUSDT", "Bitcoin Cash"),
+        ("LTCUSDT", "LiteCoin"),
+        ("DASHUSDT", "Dash"),
+        ("DOGEUSDT", "Dogecoin"),
+        ("XRPUSDT", "Ripple "),
+        ("TRXUSDT", "Tron"),
+        ("ADAUSDT", "Cardano "),
+        ("BNBUSDT", "Binance Coin"),
+    )
+    crypto = serializers.ChoiceField(choices=CRYPTO_CHOICES)

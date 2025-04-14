@@ -3,6 +3,7 @@ Django>4.2,<4.3
 pillow
 python-decouple
 djangorestframework
+requests
 
 
 # third party modules
@@ -29,3 +30,4 @@ faker
 # background process and cache
 celery
 redis
+django-redis
