@@ -19,6 +19,7 @@ django-mail-templated
 django-cors-headers
 
 # deployment modules
+gunicorn
 
 # reformatting and test
 black
