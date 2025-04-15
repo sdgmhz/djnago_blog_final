@@ -44,7 +44,7 @@ schema_view = get_schema_view(
 from .views import refresh_captcha
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("secret/admin/9panel9/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
     path("", include("website.urls")),
     path("blog/", include("blog.urls")),

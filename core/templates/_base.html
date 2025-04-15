@@ -27,6 +27,16 @@
         }
         footer a { margin: 0 10px; color: #007bff; text-decoration: none; }
         footer a:hover { text-decoration: underline; }
+        .dropdown-submenu {
+            position: relative;
+          }
+          
+          .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-left: .1rem;
+            margin-right: .1rem;
+          }
       
     </style>
 </head>
@@ -39,6 +49,59 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        API Section
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/api/v1/">Post and Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/comments/api/v1/">Comment</a>
+                        </li>
+                        <li class="dropdown-submenu">
+
+                            <a class="dropdown-item dropdown-toggle" href="#">Accounts</a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{% url 'accounts:api-v1:registration' %}">Registration</a></li>
+                              <li><a class="dropdown-item" href="{% url 'accounts:api-v1:change-password' %}">Change password</a></li>
+                              <li><a class="dropdown-item" href="{% url 'accounts:api-v1:activation-resend' %}">Account Activation</a></li>
+                              <li><a class="dropdown-item" href="{% url 'accounts:api-v1:password-reset' %}">Forget password</a></li>
+                              <li><a class="dropdown-item" href="/accounts/api/v1/profile/">Profile</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">API Document</a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{% url 'schema-swagger-ui' %}">Swagger (v1)</a></li>
+                              <li><a class="dropdown-item" href="{% url 'swagger-ui' %}">Swagger (OAS 3.0)</a></li>
+                              <li><a class="dropdown-item" href="{% url 'schema-redoc' %}">Redoc (v1)</a></li>
+                              <li><a class="dropdown-item" href="{% url 'redoc' %}">Redoc (0.0.0)</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:api-v1:crypto-price' %}">Crypto price (api cache)</a>
+                        </li>
+                        
+
+                        
+                        
+                    </ul>
+                </li>
+
+
+
+
+
+
+
+
+
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'website:home' %}">Home</a>
                 </li>
@@ -188,6 +251,27 @@
         }
         
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var dropdownSubmenus = document.querySelectorAll('.dropdown-submenu');
+      
+          dropdownSubmenus.forEach(function (submenu) {
+            submenu.addEventListener('mouseenter', function () {
+              let dropdown = submenu.querySelector('.dropdown-menu');
+              if (dropdown) {
+                dropdown.classList.add('show');
+              }
+            });
+            submenu.addEventListener('mouseleave', function () {
+              let dropdown = submenu.querySelector('.dropdown-menu');
+              if (dropdown) {
+                dropdown.classList.remove('show');
+              }
+            });
+          });
+        });
+      </script>
+      
     
 
 </body>
