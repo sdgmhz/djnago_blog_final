@@ -111,7 +111,7 @@ else:
             "ENGINE": "django.db.backends.postgresql",
             "NAME": config("DB_NAME", default="mydatabase"),
             "USER": config("DB_USER", default="myuser"),
-            "PASSWORD": config("DB_PASSWORD",default="mypassword"),
+            "PASSWORD": config("DB_PASSWORD", default="mypassword"),
             "HOST": config("DB_HOST", default="db"),
             "PORT": config("DB_PORT", default=5432),
         }
@@ -187,8 +187,8 @@ else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
-    EMAIL_HOST_USER = 'django.smtp.email.test@gmail.com'
-    EMAIL_HOST_PASSWORD = 'xstj rkic qcdx ewiy'
+    EMAIL_HOST_USER = "django.smtp.email.test@gmail.com"
+    EMAIL_HOST_PASSWORD = "xstj rkic qcdx ewiy"
     EMAIL_USE_TLS = True
     EMAIL_USE_SSL = False
 
