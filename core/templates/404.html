@@ -1,18 +1,18 @@
 {% extends "_base.html" %}
 
 {% block title %}
-403
+404 - Page Not Found
 {% endblock title %}
 
 {% block content %}
-<div class="row justify-content-center mt-3">
+<div class="row justify-content-center mt-5">
     <div class="col-md-8">
-        <div class="card">
-            <div class="card-body">
-
-                <h1 class="text-center">404 Not Found</h1><br><br>
-                <h3 class="text-center"> GET LOST?! </h3>
-                <h5 class="text-center">You may use the menu and return.</h5>
+        <div class="card shadow-lg border-0">
+            <div class="card-body text-center">
+                <h1 class="display-4 text-danger">404</h1>
+                <p class="lead">Oops! The page you're looking for doesn't exist.</p>
+                <p class="text-muted">It might have been moved or deleted, or maybe you just typed the wrong address.</p>
+                <a href="{% url 'website:home' %}" class="btn btn-primary mt-3">Back to Home</a>
             </div>
         </div>
     </div>
